@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 export default class AddContacts extends Component {
+    constructor(props) {
+        super(props);
+        this.firstNameRef = React.createRef();
+        this.lastNameRef = React.createRef();
+        this.emailRef = React.createRef();
+        this.phoneRef = React.createRef();
+    }
+
     submitContact(event) {
         event.preventDefault();
 
         let contact = {
-            firstName: this.refs.firstName.value,
-            lastName: this.refs.lastName.value,
-            email: this.refs.email.value,
-            phone: this.refs.phone.value
+            firstName: this.firstNameRef.current.value,
+            lastName: this.lastNameRef.current.value,
+            email: this.emailRef.current.value,
+            phone: this.phoneRef.current.value
         }
         console.log(contact);
         fetch("http://localhost:8080/api/contacts", {
@@ -20,7 +28,7 @@ export default class AddContacts extends Component {
         })
             .then(response => response.json());
 
-        window.location.reload();
+        //  window.location.reload();
     }
 
 
@@ -30,21 +38,21 @@ export default class AddContacts extends Component {
                 <form className="col s12" onSubmit={this.submitContact.bind(this)}>
                     <div className="row">
                         <div className="input-field col s6">
-                            <input placeholder="Placeholder" ref="firstName" type="text" className="validate" />
+                            <input placeholder="Placeholder" ref={this.firstNameRef} type="text" className="validate"/>
                             <label htmlFor="firstName">First Name</label>
                         </div>
                         <div className="input-field col s6">
-                            <input ref="lastName" type="text" className="validate" />
+                            <input ref={this.lastNameRef} type="text" className="validate"/>
                             <label htmlFor="lastName">Last Name</label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s6">
-                            <input ref="email" type="email" className="validate" />
+                            <input ref={this.emailRef} type="email" className="validate"/>
                             <label htmlFor="email">Email</label>
                         </div>
                         <div className="input-field col s6">
-                            <input ref="phone" type="tel" className="validate" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" />
+                            <input ref={this.phoneRef} type="tel" className="validate" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"/>
                             <label htmlFor="phone">Phone Number</label>
                         </div>
                     </div>
